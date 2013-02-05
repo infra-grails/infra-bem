@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="FacetManager">
+    <facet type="hibernate" name="Hibernate">
+      <configuration>
+        <datasource-map />
+      </configuration>
+    </facet>
+  </component>
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/release-2.2.0">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/release-2.2.0/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/release-2.2.0/src/groovy" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/resources-1.2.RC2">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/resources-1.2.RC2/src/java" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/resources-1.2.RC2/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/resources-1.2.RC2/grails-app/i18n" isTestSource="false" />
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/resources-1.2.RC2/grails-app/taglib" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/rest-client-builder-1.0.3">
+      <sourceFolder url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/rest-client-builder-1.0.3/src/groovy" isTestSource="false" />
+    </content>
+    <content url="file://$USER_HOME$/.grails/2.2.0/projects/infra-bem/plugins/tomcat-2.2.0" />
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" scope="PROVIDED" name="grails-2.2.0" level="application" />
+    <orderEntry type="module-library" exported="">
+      <library name="Grails User Library (infra-bem-grailsPlugins)">
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+  </component>
+</module>
+
