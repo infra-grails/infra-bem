@@ -16,7 +16,7 @@ grails bem-block my-block
 grails bem-block my-another
 ```
 
-It will create `views/bem/my/_block.gsp`, `web-app/bem/my/block.css`, the same resources for `my-another`
+It will create `views/bem/my/_block.gsp`, `web-app/bem/my/block/block.css`, the same resources for `my-another`
 block and register them all in `BemResources.groovy` (you shouldn't care about this unless you wish to alter
 your block resources, e.g. add javascripts).
 
