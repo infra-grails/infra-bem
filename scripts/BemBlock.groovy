@@ -27,14 +27,14 @@ target(main: "BEM block scaffolding") {
     }
     if (path == "/") path = ""
 
-    String blockCss = "bem/$path${name}.css"
+    String blockCss = "bem/$path${name}/${name}.css"
 
     println "Generating basic artifacts for ${blockName}..."
 
     [
             ("${infraBemPluginDir}/src/templates/_block.gsp") : "${basedir}/grails-app/views/bem/${path}_${name}.gsp",
             ("${infraBemPluginDir}/src/templates/block.css") : "${basedir}/web-app/$blockCss",
-            ("${infraBemPluginDir}/src/templates/block.html") : "${basedir}/web-app/bem/${path}${name}.html"
+            ("${infraBemPluginDir}/src/templates/block.html") : "${basedir}/web-app/bem/$path${name}/${name}.html"
     ].entrySet().each {
         ant.copy(file: it.key, tofile: it.value, overwrite: true)
         ant.replace(file: it.value) {

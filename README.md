@@ -36,7 +36,7 @@ In any of your views, e.g. `views/index.gsp`, you may use `<infra:build/>` tag.
 
   'my-block'(modifierKey: 'modifierValue', _:[title:"it's a model map"], _attrs:[onclick:"alert('root!')"]) {
   
-      'my-block'(position: 'top') // modifier is .my-block_position_top
+      'my-block'(position: 'top') // modifier is .m-my-block_position_top
       
       for(i in 0..10) { // you should insert all structure logic there
         'my-another'() // to insert a block without params, don't forget to use parenthes!
