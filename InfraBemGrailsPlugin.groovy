@@ -1,6 +1,6 @@
 class InfraBemGrailsPlugin {
     // the plugin version
-    def version = "0.1"
+    def version = "0.1-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.2 > *"
     // resources that are excluded from plugin packaging
@@ -14,7 +14,7 @@ class InfraBemGrailsPlugin {
     def author = "Dmitry Kurinskiy"
     def authorEmail = ""
     def description = '''\
-Brief summary/description of the plugin.
+BEM tools for grails: advanced markup development methodology, originated in Yandex, ported to Grails
 '''
 
     // URL to the plugin's documentation
@@ -32,7 +32,7 @@ Brief summary/description of the plugin.
 //    def developers = [ [ name: "Joe Bloggs", email: "joe@bloggs.net" ]]
 
     // Location of the plugin's issue tracker.
-    def issueManagement = [ system: "JIRA", url: "https://github.com/alari/infra-bem/issues" ]
+    def issueManagement = [ system: "github", url: "https://github.com/alari/infra-bem/issues" ]
 
     // Online location of the plugin's browseable source code.
     def scm = [ url: "https://github.com/alari/infra-bem" ]
