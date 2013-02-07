@@ -21,7 +21,8 @@ class BemTagLib {
     def bemAttrs = {attrs->
         String blockName = attrs.for
         getBlockAttrs(blockName).entrySet().each {
-            out << " ${it.key}=\"${it.value.encodeAsHTML()}\""
+            println it.value
+            out << / ${it.key}="${it.value.encodeAsHTML()}"/
         }
     }
 
