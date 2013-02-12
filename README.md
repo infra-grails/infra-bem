@@ -84,9 +84,9 @@ Generates all attributes for a BEM block for its name. Probably you will never t
 
 Example:
 ```
-<div${infra.bemAttrs(for:'root')}>
+<div<infra:bemAttrs for='root'/>>
     <h1 class="b-root__title">${title}</h1>
-    ${body()}
+    <infra:unescape var="${body()}"/>
 </div>
 ```
 
@@ -103,6 +103,12 @@ Hard uses another block in a current block. Attributes are:
 
 Builds a page (or a part of a page) by DSL schema. The only attribute of `infra:build` is a `schema` closure with
 DSL describing the page structure.
+
+### infra:unescape
+
+If a variable you render is displayed in html-encoded form for an incredible reason, use this tag to render it as is.
+
+- _var_ -- a data piece to render.
 
 
 Schema
