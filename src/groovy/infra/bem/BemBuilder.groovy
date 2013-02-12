@@ -40,7 +40,7 @@ class BemBuilder {
             if (args?.last() instanceof Closure) {
                 body = (Closure)args.last()
                 body.delegate = this
-                body.resolveStrategy = Closure.DELEGATE_ONLY
+                body.resolveStrategy = Closure.DELEGATE_FIRST
             }
         }
 
