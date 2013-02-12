@@ -36,6 +36,10 @@ class BemTagLib {
         out << g.render(template: template, model: model, body)
     }
 
+    def unescape = {attrs ->
+        def var = attrs.var
+        if(var) out << var
+    }
 
     Map<String,Map<String,String>> getAttrsStorage() {
         Map<String, Map<String,String>> storage = pageScope.bemAttrsStorage
