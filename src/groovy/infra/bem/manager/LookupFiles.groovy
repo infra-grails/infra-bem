@@ -1,4 +1,4 @@
-package infra.bem
+package infra.bem.manager
 
 import java.nio.file.FileVisitResult
 import java.nio.file.Files
@@ -12,13 +12,13 @@ import static java.nio.file.FileVisitResult.CONTINUE;
  * @author alari
  * @since 2/25/13 6:29 PM
  */
-class BemLookupFiles extends java.nio.file.SimpleFileVisitor<Path> {
+class LookupFiles extends java.nio.file.SimpleFileVisitor<Path> {
 
     private Collection<String> exts = []
     private List<Path> files = new LinkedList<>()
     private String includes
 
-    BemLookupFiles lookup(Collection<String> extensions, String includes) {
+    LookupFiles lookup(Collection<String> extensions, String includes) {
         exts = extensions
         this.includes = includes
         files = new LinkedList<>()
