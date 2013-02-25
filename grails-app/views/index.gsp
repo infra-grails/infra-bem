@@ -13,9 +13,12 @@
 <infra:build schema="${{
 
 
-    'root'(modif: 'root', _:[title:"root core root"], _attrs:[onclick:"alert('root!')"]) {
+    'root'(
+            modif: 'root',
+            _:[title:"root-core-root"],
+            _attrs:[onclick:"alert('rootт!')"]) {
 
-        root(amodif: "top", _:[title:"top test"])
+        root (amodif: "top", _:[title:"top test"])
         for(i in 0..10) {
             root(emodif: "bottom", _:[title:"middle ${i}"])
         }

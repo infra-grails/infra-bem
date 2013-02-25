@@ -24,17 +24,19 @@ grails.project.dependency.resolution = {
         grailsRepo "http://mvn.quonb.org/repo", "quonb"
     }
     dependencies {
-        // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
-
-        // runtime 'mysql:mysql-connector-java:5.1.21'
+        test "org.spockframework:spock-grails-support:0.7-groovy-2.0"
     }
 
     plugins {
-        build(":tomcat:$grailsVersion",
+        compile(":tomcat:$grailsVersion",
               ":release:2.2.0") {
             export = false
         }
 
         runtime ":resources:1.2.RC2"
+
+        test(":spock:0.7") {
+            exclude "spock-grails-support"
+        }
     }
 }
