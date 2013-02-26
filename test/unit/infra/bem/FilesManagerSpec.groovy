@@ -1,16 +1,11 @@
 package infra.bem
 
-import grails.test.mixin.*
 import infra.bem.manager.FilesManager
 import spock.lang.Specification
 
 import java.util.regex.Pattern
 
-/**
- * See the API for {@link grails.test.mixin.services.ServiceUnitTestMixin} for usage instructions
- */
-@TestFor(BemManagerService)
-class BemManagerServiceSpec extends Specification {
+class FilesManagerSpec extends Specification {
 
     void "pattern for blocks matcher spec"(boolean res, String token) {
         when:
