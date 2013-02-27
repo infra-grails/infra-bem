@@ -43,6 +43,21 @@ class BemManagerService {
         manager.modifyStatics()
 
         println()
+        println "Done!"
+        println()
+
+        println """
+*****************************************************
+*                                                   *
+*                 W A R N I N G                     *
+*                                                   *
+*****************************************************
+
+    It's just a Stupid Mechanism doing Dirty Work.
+           You MUST check the changelog
+        and test your project: it may fail.
+              (Be happy if it won't!)
+"""
     }
 
 
