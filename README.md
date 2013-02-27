@@ -150,6 +150,25 @@ Usage example:
 
 `grails bB`
 
+### bem-lookup
+
+Finds all the usages of given block in a project that could be found not in runtime.
+
+Usage example:
+
+`grails bem-lookup news-footer-comment`
+
+### bem-rename
+
+Maintenance script: helps you to support a huge amounts of markup when it is getting even more complex. Renames and
+moves all block resources, css classes, changes links to static files, and so on.
+
+Use it when the block name does not match the project domain model.
+
+Usage example:
+
+`grails bem-rename news-footer-comment news-comment-footer`
+
 
 Changelog
 --------------------------
