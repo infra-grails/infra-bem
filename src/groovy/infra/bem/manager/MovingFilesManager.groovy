@@ -51,17 +51,29 @@ class MovingFilesManager extends FilesManager {
         lookup(STATIC_EXTENSIONS).walk(getBlockStatics(baseBlock)).each {
             replaceInFile(it)
         }
-        getBlockStatics(baseBlock).each {
-            if(Files.isRegularFile(it)) {
-                String fn = it.toFile().name
-                move(getBlockStatics(baseBlock).resolve(fn), getBlockStatics(moveTo).resolve(fn))
-                rename.put(getBlockPath(baseBlock)+"/"+fn, getBlockPath(moveTo)+"/"+fn)
+
+        Path blockStatics = getBlockStatics(baseBlock)
+        Path moveStatics = getBlockStatics(moveTo)
+
+        if (blockStatics.toFile().isDirectory()) {
+            blockStatics.toFile().eachFile {
+                if(it.isFile()) {
+                    String fn = it.name
+                    Path src = blockStatics.resolve(fn)
+                    Path dest = moveStatics.resolve(fn.replace(baseBlock, moveTo))
+                    move(src, dest)
+                    rename.put("bem/${baseBlock.replace('-','/')}/${fn}", "bem/${moveTo.replace('-','/')}/${dest.toFile().name}")
+                } else {
+                    println "${it} is not a file"
+                }
             }
         }
+        println rename
         lookup(STATIC_EXTENSIONS).walk(statics).each {
             replaceInFile(it, rename)
         }
         for (Path p in Files.newDirectoryStream(confPath, "*Resources.groovy")) if (p.toFile().text.indexOf(baseBlock) > 0) {
+            replaceInFile(p)
             replaceInFile(p, rename)
         }
     }
@@ -74,7 +86,7 @@ class MovingFilesManager extends FilesManager {
     }
 
     private void move(Path src, Path dest) {
-        log.info("Moving: ${src}->${dest}")
+        println "Moving: ${src} -> ${dest}"
         dest.toFile().parentFile.mkdirs()
         Files.move(src, dest, ATOMIC_MOVE)
     }
