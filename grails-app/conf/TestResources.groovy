@@ -1,3 +1,5 @@
 modules = {
-    'root'()
+    'root'{
+        resource url: "bem/root/root.css"
+    }
 }
