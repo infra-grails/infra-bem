@@ -1,5 +1,7 @@
 package infra.bem.manager
 
+import groovy.util.logging.Log4j
+
 import static java.nio.file.StandardCopyOption.*;
 
 import java.nio.file.Files
@@ -10,6 +12,7 @@ import java.util.regex.Matcher
  * @author alari
  * @since 2/25/13 7:10 PM
  */
+@Log4j
 class MovingFilesManager extends FilesManager {
     private final String moveTo
 
@@ -45,6 +48,9 @@ class MovingFilesManager extends FilesManager {
 
     void modifyStatics() {
         Map<String,String> rename = [:]
+        lookup(STATIC_EXTENSIONS).walk(getBlockStatics(baseBlock)).each {
+            replaceInFile(it)
+        }
         getBlockStatics(baseBlock).each {
             if(Files.isRegularFile(it)) {
                 String fn = it.toFile().name
@@ -52,7 +58,12 @@ class MovingFilesManager extends FilesManager {
                 rename.put(getBlockPath(baseBlock)+"/"+fn, getBlockPath(moveTo)+"/"+fn)
             }
         }
-        // TODO: rename in statics and resources
+        lookup(STATIC_EXTENSIONS).walk(statics).each {
+            replaceInFile(it, rename)
+        }
+        for (Path p in Files.newDirectoryStream(confPath, "*Resources.groovy")) if (p.toFile().text.indexOf(baseBlock) > 0) {
+            replaceInFile(p, rename)
+        }
     }
 
     void modifyViews() {
@@ -63,11 +74,22 @@ class MovingFilesManager extends FilesManager {
     }
 
     private void move(Path src, Path dest) {
+        log.info("Moving: ${src}->${dest}")
+        dest.toFile().parentFile.mkdirs()
         Files.move(src, dest, ATOMIC_MOVE)
     }
 
     void writeToFile(File file, StringBuffer buffer) {
         file.text = buffer.toString()
+    }
+
+    private void replaceInFile(Path filePath, Map<String,String> replacements) {
+        File f = filePath.toFile()
+        String text = f.text
+        replacements.entrySet().each {
+            text = text.replace(it.key, it.value)
+        }
+        f.text = text
     }
 
     private void replaceInFile(Path filePath) {

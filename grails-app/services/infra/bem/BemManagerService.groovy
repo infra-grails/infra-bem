@@ -36,18 +36,11 @@ class BemManagerService {
 
         println "Renaming b-${blockName} to b-${moveToBlockName}..."
 
-        // find block resources in views
-
-
-        // move the views
-        // find block resources in web-app
-        // collect the paths
-        // move block resources
-        // walk against all the resources and configs
-        // replace old paths to new paths
-
         println "replacing in views..."
         manager.modifyViews()
+
+        println "replacing in statics..."
+        manager.modifyStatics()
 
         println()
     }
