@@ -5,6 +5,8 @@ class InfraBemGrailsPlugin {
             "grails-app/views/error.gsp",
             "grails-app/views/index.gsp",
             "grails-app/views/bem/_root.gsp",
+            "grails-app/conf/TestResources.groovy",
+            "web-app/bem"
     ]
 
     def title = "Infra Bem Plugin"
