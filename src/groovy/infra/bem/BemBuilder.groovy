@@ -18,7 +18,7 @@ class BemBuilder {
         this.bem = bem
     }
 
-    def methodMissing(String name, Collection args) {
+    def methodMissing(String name, args) {
         String template = getBlockTemplate(name)
         Map model = [:]
         Map modifiers = [:]
