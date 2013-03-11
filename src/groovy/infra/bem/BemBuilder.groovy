@@ -1,12 +1,9 @@
 package infra.bem
 
-import groovy.transform.CompileStatic
-
 /**
  * @author alari
  * @since 2/5/13 10:45 AM
  */
-@CompileStatic
 class BemBuilder {
     private BemTagLib bem
 
