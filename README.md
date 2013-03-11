@@ -34,7 +34,9 @@ In any of your views, e.g. `views/index.gsp`, you may use `<infra:build/>` tag.
 
 <infra:build schema="${{
 
-  'my-block'(modifierKey: 'modifierValue', _:[title:"it's a model map"], _attrs:[onclick:"alert('root!')"]) {
+  'my-block'(modifierKey: 'modifierValue',
+            _: [title:"it's a model map", taglib:_g.link(uri:"/", "prefix a taglib with underscore to use its value in attributes")],
+            _attrs: [onclick:"alert('root!')"]) {
   
       'my-block'(position: 'top') // modifier is .m-my-block_position_top
       
