@@ -35,7 +35,7 @@ grails.project.dependency.resolution = {
             export = false
         }
 
-        runtime ":resources:1.2.RC2"
+        runtime ":resources:1.2"
 
         test(":spock:0.7") {
             exclude "spock-grails-support"
