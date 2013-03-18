@@ -1,11 +1,14 @@
 package infra.bem
 
+import grails.util.Environment
+import org.codehaus.groovy.grails.web.util.StreamCharBuffer
+
 class BemTagLib {
     static namespace = "infra"
 
     def build = {attrs->
 
-        BemBuilder builder = new BemBuilder(this)
+        BemBuilder builder = new BemBuilder(this, out)
 
         try {
             Closure schema = attrs.schema
@@ -18,6 +21,12 @@ class BemTagLib {
 
     }
 
+    def place = {attrs, body->
+        String blockName = attrs.for
+        String placeName = attrs.name
+        out << (getSubBlock(blockName, placeName) ?: body())
+    }
+
     def bemAttrs = {attrs->
         String blockName = attrs.for
         getBlockAttrs(blockName).entrySet().each {
@@ -26,14 +35,24 @@ class BemTagLib {
     }
 
     def include = {attrs, body->
-        String template = BemBuilder.getBlockTemplate(attrs.block)
-        buildBlock((String)attrs.block, template, body, attrs.modifiers ?: [:], attrs.model ?: [:], attrs.attrs ?: [:])
+        BemBlock block = new BemBlock(
+                name: attrs.block,
+                body: body,
+                modifiers: attrs.modifiers ?: [:],
+                model: attrs.model ?: [:],
+                attrs: attrs.attrs ?: [:]
+
+        )
+        out << buildBlock(block)
     }
 
-    void buildBlock(String name, String template, Closure body, Map modifiers = [:], Map model = [:], Map attrs = [:]) {
-        r.require(module: "b-${name}")
-        setBlockAttrs(name, attrs, modifiers)
-        out << g.render(template: template, model: model, body)
+    StreamCharBuffer buildBlock(BemBlock block) {
+        if (Environment.TEST != Environment.getCurrent()) r.require(module: "b-${block.name}")
+        setBlockAttrs(block)
+        if (block.subs?.size()) {
+            setBlockSubs(block)
+        }
+        g.render(template: block.template, model: block.model, block.body)
     }
 
     def unescape = {attrs ->
@@ -50,16 +69,34 @@ class BemTagLib {
         storage
     }
 
+    Map<String,Map<String,?>> getSubsStorage() {
+        Map<String,Map<String,?>> storage = pageScope.bemSubsStorage
+        if (!storage) {
+            storage = [:]
+            pageScope.bemSubsStorage = storage
+        }
+        storage
+    }
+
     Map<String,String> getBlockAttrs(String blockName) {
         attrsStorage.containsKey(blockName) ? attrsStorage.remove(blockName) : [:]
     }
 
-    void setBlockAttrs(String blockName, Map<String,String> attrs, Map<String,String> modifiers) {
-        String cssClass = "b-${blockName}"
-        modifiers.entrySet().each {
-            cssClass += " m-${blockName}_${it.key}_${it.value}"
+    private setBlockSubs(BemBlock block) {
+        subsStorage.put(block.name, block.subs)
+    }
+
+    def getSubBlock(String blockName, String placeName) {
+        subsStorage.get(blockName)?.remove(placeName)
+    }
+
+    private void setBlockAttrs(BemBlock block) {
+        String cssClass = "b-${block.name}"
+        block.modifiers.entrySet().each {
+            cssClass += " m-${block.name}_${it.key}_${it.value}"
         }
-        attrs.put('class', cssClass)
-        attrsStorage.put(blockName, attrs)
+        block.attrs.put('class', cssClass)
+        attrsStorage.put(block.name, block.attrs)
+
     }
 }

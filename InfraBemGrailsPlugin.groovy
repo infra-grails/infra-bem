@@ -5,7 +5,7 @@ class InfraBemGrailsPlugin {
             "grails-app/views/error.gsp",
             "grails-app/views/index.gsp",
             "grails-app/views/bem/_root.gsp",
-            "grails-app/conf/TestResources.groovy",
+            "grails-app/conf/BemResources.groovy",
             "web-app/bem"
     ]
 

@@ -1,51 +1,54 @@
 package infra.bem
 
+import groovy.transform.CompileStatic
+import org.codehaus.groovy.grails.web.util.StreamCharBuffer
+
 /**
  * @author alari
  * @since 2/5/13 10:45 AM
  */
+@CompileStatic
 class BemBuilder {
-    private BemTagLib bem
+    private final BemTagLib bem
+    private final Writer out
 
-    private static final Closure EMPTY = {}
-    private Map<String,BemTaglibWrapper> taglibsByPrefix = [:]
+    private final Map<String,BemTaglibWrapper> taglibsByPrefix = [:]
 
-    static String getBlockTemplate(String blockName) {
-        "/bem/${blockName.replace('-', '/')}"
-    }
-
-    BemBuilder(BemTagLib bem) {
+    BemBuilder(BemTagLib bem, Writer out) {
         this.bem = bem
+        this.out = out
     }
 
     def methodMissing(String name, args) {
-        String template = getBlockTemplate(name)
-        Map model = [:]
-        Map modifiers = [:]
-        Map attrs = [:]
-        Closure body = EMPTY
+        BemBlock block = new BemBlock(name: name)
+
+        Object[] argsList = args as Object[]
 
         if (args) {
 
-            if (args?.first() instanceof Map) {
-                Map argsMap = (Map)args.first()
-                if (argsMap.containsKey("_")) {
-                    model =  (Map)argsMap.remove("_")
-                }
-                if (argsMap.containsKey("_attrs")) {
-                    attrs = (Map)argsMap.remove("_attrs")
-                }
-                modifiers = argsMap
+            if (argsList?.first() instanceof Map) {
+                block.args = (Map)argsList.first()
+
             }
 
-            if (args?.last() instanceof Closure) {
-                body = (Closure)args.last()
+            if (argsList?.last() instanceof Closure) {
+                Closure body = (Closure)argsList.last()
                 body.delegate = this
                 body.resolveStrategy = Closure.DELEGATE_FIRST
+                block.body = body
             }
         }
 
-        bem.buildBlock(name, template, body, modifiers, model, attrs)
+        if (block.sub) {
+            Writer subOut = new CharArrayWriter()
+            BemSubBuilder subBuilder = new BemSubBuilder(bem, subOut)
+            block.sub.delegate = subBuilder
+            block.sub.resolveStrategy = Closure.DELEGATE_FIRST
+            block.sub.call()
+            block.subs = subBuilder.values
+        }
+
+        out << bem.buildBlock(block)
     }
 
     def propertyMissing(String name) {
@@ -55,7 +58,7 @@ class BemBuilder {
         }
         // Taglibs are wrapped to write to output instead of returning
         if (!taglibsByPrefix.containsKey(name)) {
-            taglibsByPrefix.put(name, new BemTaglibWrapper(bem.propertyMissing(name), bem.out))
+            taglibsByPrefix.put(name, new BemTaglibWrapper(bem.propertyMissing(name), out))
         }
         taglibsByPrefix.get(name)
     }
