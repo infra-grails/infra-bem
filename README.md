@@ -112,6 +112,14 @@ If a variable you render is displayed in html-encoded form for an incredible rea
 
 - _var_ -- a data piece to render.
 
+### infra:place
+
+A place for a subblock or a functional part of a current block. All attributes are required.
+
+- _for_ -- a block name you place the tag in.
+- _name_ -- a name of a place, to be used in `_sub` closure in the build schema.
+
+Notice: `<infra:place>` tag may contain a default body.
 
 Schema
 --------------------------
@@ -121,7 +129,7 @@ The DSL describing page schema defines a number of quite simple rules.
 - All method calls are mapped to BEM blocks
 - Last argument is closure -- equivalent to `body` in GSP tags
 - First argument is a map with modifiers, model and custom attributes
-- Namespaced method calls are mapped to Grails tags
+- Namespaced method calls are mapped to Grails tags. To use Grails tag in attribute value, prefix it with `_`, e.g. `_g.createLink()`
 
 Map argument in block call in a schema by default is passed to modifiers:
 
@@ -131,6 +139,20 @@ Map argument in block call in a schema by default is passed to modifiers:
 
 `_attrs` key provides a map of custom attributes. For example, `_attrs:['ng-click':'alert("this!")']` will be translated
 into Angular.js `ng-click` directive attribute.
+
+`_sub` a schema for subblock placements. Example: 
+
+```groovy
+test(_sub: {
+  'place-name' = {
+     'root'() // you may use a schema
+  }
+  
+  head = "you may directly pass a value to output"
+  
+  footer = 'root'()// you may pass a block value
+})
+```
 
 You may (and you should) use inheritance in page schemas. You should pass all your logic, iterations, caching, all ifs
 and elses to schema and not to markup blocks themselves.
