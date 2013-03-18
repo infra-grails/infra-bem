@@ -115,9 +115,8 @@ class BemTagLibSpec extends Specification {
     <div><div class="b-root">
     <h1>footer</h1>
 
-    </div></div>
-</div>
-<div class="b-sub-test">
+    </div> </div>
+</div><div class="b-sub-test">
 <span>default head</span>
     empty
 <div></div>
