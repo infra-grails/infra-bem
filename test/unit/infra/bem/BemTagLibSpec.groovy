@@ -104,7 +104,6 @@ class BemTagLibSpec extends Specification {
                 }
             }
         }).replaceAll(~/\s+/, " ")
-        println out
 
         expect:
         out == """<div class="b-root">
@@ -123,5 +122,16 @@ class BemTagLibSpec extends Specification {
 </div>
 </div>
 """.replaceAll(~/\s+/, " ")
+    }
+
+    void "can omit subblock"() {
+        String out = tagLib.include(block: "sub-test").replaceAll(~/\s+/, " ")
+
+        expect:
+        out == """<div class="b-sub-test">
+    <span>default head</span>
+
+    <div></div>
+</div>""".replaceAll(~/\s+/, " ")
     }
 }
