@@ -123,6 +123,47 @@ class BemTagLibSpec extends Specification {
 </div>
 """.replaceAll(~/\s+/, " ")
     }
+        def "sub places with closures render ok"(){
+
+        String out = tagLib.build(schema: {
+            'root' {
+                'sub-test'(
+                        _sub: {
+                            head = {
+                                'root'(_: [title:"1"])
+                                'root'(_: [title:"2"])
+                            }
+                            footer = 'root'(_: [title:"footer"])
+                        }
+                ) {
+                    "just a text"
+                }
+                'sub-test' {
+                    "empty"
+                }
+            }
+        }).replaceAll(~/\s+/, " ")
+
+        expect:
+        out == """<div class="b-root">
+    <h1></h1>
+<div class="b-sub-test">
+<span><div class="b-root"> <h1>1</h1> </div>
+        <div class="b-root"> <h1>2</h1> </div>
+</span>
+    just a text
+    <div><div class="b-root">
+    <h1>footer</h1>
+
+    </div> </div>
+</div><div class="b-sub-test">
+<span>default head</span>
+    empty
+<div></div>
+</div>
+</div>
+""".replaceAll(~/\s+/, " ")
+    }
 
     void "can omit subblock"() {
         String out = tagLib.include(block: "sub-test").replaceAll(~/\s+/, " ")

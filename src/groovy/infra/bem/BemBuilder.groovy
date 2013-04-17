@@ -9,8 +9,8 @@ import org.codehaus.groovy.grails.web.util.StreamCharBuffer
  */
 @CompileStatic
 class BemBuilder {
-    private final BemTagLib bem
-    private final Writer out
+    protected final BemTagLib bem
+    protected final Writer out
 
     private final Map<String,BemTaglibWrapper> taglibsByPrefix = [:]
 
